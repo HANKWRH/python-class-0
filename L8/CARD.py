@@ -5,6 +5,7 @@ from typing import List
 
 w = Window(draw_sprite_rects=True, background_image='L8.image/forest_04.png')
 click = Player('L8.image/hit.wav')
+
 no_match_music = Player('L8.image/laugh.wav')
 match_music = Player('L8.image/point.wav')
 audio_loop = AudioLoop('L8.image/LoopLivi.wav')
@@ -41,9 +42,11 @@ class Button(Sprite):
 class Card(Sprite):
     total = 0  # static variable
     def on_create(self):
+        self.wait = 2
+        self.state_wait = -1
         self.state = 0
         self.image = img_list.pop()
-        self.is_visible = False
+        self.is_visible = True
         self.scale = 1.5
         Card.total += 1
     def on_left_click(self):
@@ -52,9 +55,17 @@ class Card(Sprite):
             click.play()
             self.is_visible = True
     def on_update(self, dt):
+        if self.state_wait == -1:
+            
+            self.wait -= dt
+            if self.wait < 0:
+                self.state_wait = 0
+                self.is_visible = False
         if self.state == 1:
             self.rotation += 1
             self.scale -= 0.01
+            if self.scale <= 0:
+                self.scale = 0
             if self.rotation >= 180:
                 self.delete()
                 Card.total -= 1
