@@ -11,15 +11,23 @@ match_music = Player('L8.image/point.wav')
 audio_loop = AudioLoop('L8.image/LoopLivi.wav')
 audio_loop.play()
 
-clicked_list :List['Card'] = []
-img_list = 4*['L8.image/1.png', 'L8.image/2.png', 'L8.image/3.png', 'L8.image/4.png']
+clicked_list: List['Card'] = []
+img_list = 4 * [
+    'L8.image/1.png',
+    'L8.image/2.png',
+    'L8.image/3.png',
+    'L8.image/4.png'
+]
 shuffle(img_list)
+
+
 class Button(Sprite):
     def on_create(self):
-        self.image ='L8.image/button.png'
+        self.image = 'L8.image/button.png'
         self.x = 800
         self.y = 300
         self.scale = 0.5
+
     def on_left_click(self):
         if len(clicked_list) ==2:
             if clicked_list[0].image == clicked_list[1].image:
