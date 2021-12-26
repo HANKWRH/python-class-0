@@ -1,3 +1,4 @@
 
 # PYTHON 學習過程
 ## 家齊高中王睿閎
+![Plot](output.png)
