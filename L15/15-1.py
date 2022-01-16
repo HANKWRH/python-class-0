@@ -158,8 +158,8 @@ class Enemy(Sprite):
         if self.is_touching_any_sprite_with_tag('pb'):
             for b in self.get_touching_sprites_with_tag('pb'):
                 b.delete()
-            self.health.width -= 50
-            self.health.dx -= 25
+            self.health.width -= 5
+            self.health.dx -= 2.5
         self.health.x = self.x + self.health.dx
         self.health.y = self.y + 40
         self.time += dt
