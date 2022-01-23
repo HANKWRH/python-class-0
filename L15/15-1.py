@@ -46,8 +46,11 @@ class Player(Sprite):
         self.scale = 15
         self.y_speed = 0
         self.layer = 2
-        
+        self.btime = 0
+        self.ntime = 0
     def on_update(self, dt):
+        self.btime += dt
+        self.ntime += dt
         if self.is_touching_sprite(dp):
             self.health.width -= 10
             self.health.dx -= 5
@@ -84,9 +87,13 @@ class Player(Sprite):
                 self.y_speed = 0
                 self.y += 0.5
         if w.is_key_down(KeyCode.B):
-            w.create_sprite(PlayerBullet)
+            if self.btime >= 1:
+                w.create_sprite(PlayerBullet)
+                self.btime = 0
         if w.is_key_down(KeyCode.N):
-            w.create_sprite(Pb2)
+            if self.ntime >= 3:    
+                w.create_sprite(Pb2)
+                self.ntime = 0
 
         self.health.x = self.x + self.health.dx
         self.health.y = self.y + 20
@@ -206,7 +213,11 @@ class EnemyBullet(Sprite):
         #     self.delete()
 
 
-
+class Storm(Sprite):
+    def on_create(self):
+        return super().on_create()
+    def on_update(self, dt):
+        return super().on_update(dt)
 
 
 class EnemyHealth(Sprite):
