@@ -142,6 +142,7 @@ class Platform(Sprite):
 
 class Enemy(Sprite):
     def on_create(self):
+        
         self.timech = 0
         self.color = Color.MAGENTA
         self.health = w.create_sprite(EnemyHealth)
