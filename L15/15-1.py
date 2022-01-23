@@ -1,6 +1,3 @@
-from platform import platform
-from re import S
-from turtle import window_width
 from pycat.core import Color, KeyCode, Sprite, Window
 from random import randint
 
@@ -87,7 +84,7 @@ class Player(Sprite):
                 self.y_speed = 0
                 self.y += 0.5
         if w.is_key_down(KeyCode.B):
-            if self.btime >= 1:
+            if self.btime >= 0.5:
                 w.create_sprite(PlayerBullet)
                 self.btime = 0
         if w.is_key_down(KeyCode.N):
@@ -215,7 +212,8 @@ class EnemyBullet(Sprite):
 
 class Storm(Sprite):
     def on_create(self):
-        return super().on_create()
+        self.add_tag('storm')
+        self.x = randint(0, 1250)
     def on_update(self, dt):
         return super().on_update(dt)
 

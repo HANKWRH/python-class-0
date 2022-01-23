@@ -1,75 +1,50 @@
 <link rel="stylesheet" type="text/css" media="all" href="style.css" />
 
 # Game
-by Ivan
+by 王睿閎
 
-![game](vid.gif)
+![game](boom.gif)
 
 ## Introduction
 
+一開始
 
-Introduce your game here.
+介紹這款遊戲
 
-- How do you play it?
-
-    用{W
-
-- What does the player do?
-
-    You need to evade enemy's bullet and shoot the enemies.
-
-- What do the enemies do?
-
-    Enemies will shoot you.
-
-- How do you win?
-
-    Kill the boss in time then you win.
-
-- How do you lose?
-
-    If your health is zero then you lose.
+玩家用{W,A,S,D}來移動，以{N,B}來射擊，玩家需要經由移動跟射擊來擊敗BOSS，敵人會攻擊玩家，把BOSS擊敗並且走到門後就能夠獲勝，如果生命值為0就會輸
 
 
 ---
 
 ## Implementation Details
 
-- Which programming language/ tools did you use?
+我使用PYTHON跟PYCAT來做這款遊戲，在這個遊戲中我用到了這些程式語言list,class,inheritance。
 
-    I used Python and Pycat (a python game library) to make this game.
-    From pycat I use the ``Color``, ``KeyCode``, ``Sprite``, ``Window``, ``Scheduler``, and ``Label`` classes.
-    I also use randint from the random module
 
-- Which programming concepts did you use and how?
 
-    I use inheritance, iteration, lists, conditionals, variables, functions, etc.
+---
 
-- What were some of the problems you faced and how did you solve them?
+## 遊戲創作
 
-    THe code below shoots a bullet at the enemy closest to the player.
-
-    ``` Python
-    if window.is_key_down(KeyCode.SPACE):
-        enemy=window.get_sprites_with_tag('enemy')
-        bullet=window.create_sprite(Bullet)
-        min_d=1000000000
-        for e in enemy:
-            d=self.distance_to(e.position)
-            if d<min_d:
-                min_d=d
-                bullet.point_toward_sprite(e)
+- 遇到的困難?
+    在創作這款遊戲的過程中遇到了許多的困難
+    
+    1.讓玩家跳起來
+    ```Python
+    if w.is_key_down(KeyCode.W):#當W鍵按下時
+        if self.is_touching_ground:#判斷是否碰到地板
+            self.y_speed = 10
+            self.is_touching_ground = False
+    self.y += self.y_speed
+    self.y_speed -= 0.5
+        if self.y_speed < 0:
+        while self.is_touching_any_sprite_with_tag('platform'):
+            self.is_touching_ground = True
+            self.y_speed = 0
+            self.y += 0.5
     ```
-
 ---
 
-## Game Design
+## 程式碼
 
-- What makes it challenging?
-
-    You need to evade lot of enemy's bullet
----
-
-## Code
-
-A link to the [code](https://github.com/iiiiivan/python-class-0/blob/main/L14/l14.py)
+程式碼的連結 [code](https://github.com/HANKWRH/python-class-0/blob/main/L15/15-1.py)
