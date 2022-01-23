@@ -215,7 +215,9 @@ class Storm(Sprite):
         self.add_tag('storm')
         self.x = randint(0, 1250)
     def on_update(self, dt):
-        return super().on_update(dt)
+        self.y -= 1
+        if self.is_touching_any_sprite_with_tag('platform'):
+            self.delete()
 
 
 class EnemyHealth(Sprite):
