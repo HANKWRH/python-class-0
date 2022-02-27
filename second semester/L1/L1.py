@@ -23,7 +23,7 @@ class Score(Label):
         self.score = 0
     def on_update(self, dt: float):
         self.text = 'Score = '+str(self.score)
-        if self.score == 1:
+        if self.score == 20:
             w.background_image = 'moon.jpg'
             w.background_sprite.scale = 1008/360
 
@@ -42,25 +42,18 @@ class Bird(Sprite):
         score = 0
     def on_update(self, dt):
         if w.is_key_down(KeyCode.SPACE):
-            if w.background_image == 'moon.jpg':
-                self.y_speed = 10
-            self.rotation += 15
-        self.rotation -= 0.31
-        self.y_speed -= 0.2
-        self.y += self.y_speed
-        if self.is_touching_any_sprite_with_tag('pipe') or self.is_touching_window_edge():
-            w.delete_all_sprites()
-            Scheduler.cancel_update(create_pipe)
-            w.create_label(Lose)
-            self.y_speed = 5
-            self.rotation += 15
-        self.rotation -= 0.31
-        self.y_speed -= 0.2
-        self.y += self.y_speed
-        if self.is_touching_any_sprite_with_tag('pipe') or self.is_touching_window_edge():
-            w.delete_all_sprites()
-            Scheduler.cancel_update(create_pipe)
-            w.create_label(Lose)
+            if w.background_image == 'moon.png':
+                pass
+            else:
+                self.y_speed = 5
+                self.rotation += 15
+            self.rotation -= 0.31
+            self.y_speed -= 0.2
+            self.y += self.y_speed
+            if self.is_touching_any_sprite_with_tag('pipe') or self.is_touching_window_edge():
+                w.delete_all_sprites()
+                Scheduler.cancel_update(create_pipe)
+                w.create_label(Lose)
 
 bird = w.create_sprite(Bird)
 
