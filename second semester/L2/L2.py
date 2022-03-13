@@ -33,6 +33,8 @@ class Player(Sprite):
                     min_y = p.y + self.height/2 + p.height/2
                     if prev_y > min_y:
                         self.state = AliienState.WAIT
+                    else:
+                        pass
     def on_left_click_anywhere(self):
         if self.state is AliienState.WAIT:
             dx = w.mouse_position.x - self.x
