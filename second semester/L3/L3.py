@@ -1,9 +1,9 @@
-list2d = [[1,2,5,7], [3,4,6,8]]
-for i in range(len(list2d)):
+# list2d = [[1,2,5,7], [3,4,6,8]]
+# for i in range(len(list2d)):
     
-    for j in range(len(list2d[i])):
-        if list2d[i][j]:
-            pass
+#     for j in range(len(list2d[i])):
+#         if list2d[i][j]:
+#             pass
 
 # for i in range(len(list2d)):
 #     for j in range(len(list2d[i])):
@@ -15,3 +15,10 @@ for i in range(len(list2d)):
 
 # s = input()
 # num = [int(x) for x in input]
+
+s = int(input())
+num = input().split()
+for x in range(len(num)):
+    num[x] = int(num[x])
+print(s)
+print(num)
