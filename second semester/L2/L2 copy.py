@@ -78,8 +78,7 @@ class Hitbox(Sprite):
         self.opacity=0
         self.add_tag('hit')
         self.layer=1
-
-        
+       
         
 
 a = w.create_sprite(Platform, x=100, y=300)
