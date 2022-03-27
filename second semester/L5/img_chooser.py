@@ -5,12 +5,12 @@ from random import randint
 from tables import Col
 w = Window(is_sharp_pixel_scaling=True)
 
-ROW = 11
+ROW = 12
 COL = 24
 heatmap = []
 CELL_SIZE = 50
-X0 = 70
-Y0 = w.height-70
+X0 = 20
+Y0 = w.height-20
 class Cell(Sprite):
     def on_left_click(self):
         print(self.image)
