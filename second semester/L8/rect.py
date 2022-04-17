@@ -3,8 +3,7 @@ from pycat_turtle import Turtle
 w = Window()
 
 t = w.create_sprite(Turtle)
-t.rotation=45
-t.draw_line(200)
+
 
 class Rect:
     def __init__(self,x, y, width, height) -> None:
@@ -24,6 +23,7 @@ class Rect:
         t.draw_line(self.height, 1)
         t.rotation=180
         t.draw_line(self.width, 1)
+        
 
 r=Rect(0,0,100,100)
 r.draw()
