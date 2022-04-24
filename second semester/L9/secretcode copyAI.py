@@ -6,6 +6,7 @@ from typing import List
 
 
 
+
 w = Window(draw_sprite_rects=True, is_sharp_pixel_scaling=True)
 w.set_clear_color(77, 77, 77)
 SCALE = 50
@@ -14,11 +15,12 @@ GUESS = 9
 COLORS = [Color.RED
         , Color.BLACK
         , Color(204, 255, 153)
-        , Color(0, 102, 0)
-        , Color(255, 102, 204)
-        , Color(0, 0, 225)
-        , Color(102, 51, 0)
+        # , Color(0, 102, 0)
+        # , Color(255, 102, 204)
+        # , Color(0, 0, 225)
+        # , Color(102, 51, 0)
         , Color.PURPLE]
+posiable = len(COLORS)**PEGS
 code = []
 guess_color = COLORS[0]
 for i in range(PEGS):

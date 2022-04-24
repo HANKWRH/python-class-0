@@ -1,5 +1,5 @@
 from turtle import color
-from pycat.core import Window, Color, Sprite
+from pycat.core import Window, Color, Sprite, Scheduler
 from random import choice
 from typing import List
 
@@ -114,6 +114,13 @@ class Pegs(Sprite):
         self.y =  g.y
 
 
+def auto_guess():
+    print('guess')
+    
+    Scheduler.wait(1,auto_guess())
+
+
+Scheduler.wait(1, auto_guess())
 
 
 w.create_sprite(CheckBottom)
