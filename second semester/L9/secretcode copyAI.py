@@ -21,6 +21,7 @@ COLORS = [Color.RED
         # , Color(102, 51, 0)
         , Color.PURPLE]
 posiable = len(COLORS)**PEGS
+print(posiable)
 code = []
 guess_color = COLORS[0]
 for i in range(PEGS):

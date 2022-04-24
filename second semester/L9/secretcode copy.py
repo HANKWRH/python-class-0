@@ -117,9 +117,7 @@ class Pegs(Sprite):
 def auto_guess():
     print('guess')
     
-    Scheduler.wait(1,auto_guess())
-
-
+    Scheduler.wait(1, auto_guess())
 Scheduler.wait(1, auto_guess())
 
 
