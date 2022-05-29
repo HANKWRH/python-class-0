@@ -10,8 +10,12 @@ words = dict()
 words[Group.ANIMALS] = ['cat', 'bear', 'dinosaur']
 words[Group.SPORTS]  = ['baseball',  'volleyball', 'badminton']
 # <(x_x)>
+<<<<<<< HEAD
 # o-[x_x]-o
 # [x_x] (x_x)
+=======
+
+>>>>>>> b4c2816741fd60ebd56004b795f91031696d453c
 class Label(Label):
     def on_create(self):
         self.scale = 100
