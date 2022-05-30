@@ -46,7 +46,7 @@ class RobotHead:
 x = 10
 width = randint(10, 70)
 for i in range(50):
-    r=RobotHead(x,100,width,randint(50, 100))
+    r=RobotHead(x,100,width,randint(20, 100))
     r.draw()
     x += width+10
     width = randint(10, 50)
