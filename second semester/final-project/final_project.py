@@ -147,10 +147,10 @@ class Player(Sprite):
         self.point_toward_sprite(enemy)
         self.move_dir = Point(0,0)
         if w.is_key_pressed(KeyCode.A):
-            self.rotation = 180
+            
             self.move_dir += Point(-1,0)
         if w.is_key_pressed(KeyCode.D):
-            self.rotation = 0
+            
             self.move_dir += Point(1,0)
         if w.is_key_pressed(KeyCode.S):
             self.move_dir += Point(0,-1)
@@ -171,7 +171,7 @@ class Player(Sprite):
             w.delete_all_sprites()
             Scheduler.cancel_update(spwan_enemy)
             w.create_label(Win)
-        
+
 
 
 class Sword(Sprite):
