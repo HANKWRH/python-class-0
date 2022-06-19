@@ -1,10 +1,9 @@
-from random import random
-from pycat.core import Window, Sprite, RotationMode, KeyCode, Point, Scheduler
+from pycat.core import Window, Sprite, RotationMode, KeyCode, Point, Scheduler, Label
 from enum import Enum, auto
 from random import randint
 
 
-w = Window(is_sharp_pixel_scaling=True)
+w = Window(enforce_window_limits=False, is_sharp_pixel_scaling=True)
 
 Y_MIN = 100
 Y_MAX = 540
@@ -12,7 +11,7 @@ SCALE_MIN = 45
 SCALE_MAX = 60
 S_D = SCALE_MAX - SCALE_MIN
 D = 50
-ATK_DMG = 5
+ATK_DMG = 50
 def get_scale(y):
     a = (Y_MAX - y)/(Y_MAX - Y_MIN)
     return SCALE_MIN+a*S_D
@@ -34,6 +33,7 @@ class Enemy(Sprite):
         DIE = auto()
 
     def on_create(self):
+        
         Enemy.total_enemies += 1
         if Enemy.total_enemies > 3:
             Scheduler.cancel_update(spwan_enemy)
@@ -42,18 +42,23 @@ class Enemy(Sprite):
         self.rotation_mode = RotationMode.RIGHT_LEFT
         self.scale = 1
         self.time = 0
-        self.x = w.width/2
-        self.y = w.height/2
+        self.goto_random_position()
         self.image = 'img/Wait.PNG'
         self.state = Enemy.State.WAIT
         self.healthbar = w.create_sprite(Healthbar)
+        self.set_health()
         self.hp = 100
         self.is_attacking = False
         self.attacktime = 0
-        self.goto_random_position()
+        
 
-    def delete():
+    def set_health(self):
+        self.healthbar.position = self.position
+        self.healthbar.y += self.height/2+5
+
+    def delete(self):
         super().delete()
+        self.healthbar.delete()
         Enemy.total_enemies -= 1
         if Enemy.total_enemies < 3:
             Scheduler.update(spwan_enemy, 2)
@@ -71,8 +76,7 @@ class Enemy(Sprite):
             player.healthbar.set_width(player.hp/100)
         self.scale = get_scale(self.y)*0.02
         self.time += dt
-        self.healthbar.position = self.position
-        self.healthbar.y += self.height/2+5
+        self.set_health()
         if self.time >= 1.5:
             self.state = Enemy.State.CHASE
         if self.state == Enemy.State.CHASE:
@@ -80,12 +84,20 @@ class Enemy(Sprite):
             self.move_forward(D)
             self.state = Enemy.State.WAIT
             self.time = 0
-        
+            self.set_health()
         sword = self.get_touching_sprites_with_tag('attack')
         if sword:
             self.hp -= ATK_DMG
             self.healthbar.set_width(self.hp/100)
             sword[0].remove_tag("attack")
+        if self.hp <= 0:
+            self.state = Enemy.State.DIE
+        if self.state == Enemy.State.DIE:
+            self.delete()
+            player.kills += 1
+            
+            
+        
         
         
         
@@ -119,6 +131,7 @@ class Player(Sprite):
         DIE = auto()
 
     def on_create(self):
+        self.kills = 0
         self.state = self.State.WAIT
         self.rotation_mode = RotationMode.RIGHT_LEFT
         self.scale = 100
@@ -134,8 +147,10 @@ class Player(Sprite):
         self.point_toward_sprite(enemy)
         self.move_dir = Point(0,0)
         if w.is_key_pressed(KeyCode.A):
+            self.rotation = 180
             self.move_dir += Point(-1,0)
         if w.is_key_pressed(KeyCode.D):
+            self.rotation = 0
             self.move_dir += Point(1,0)
         if w.is_key_pressed(KeyCode.S):
             self.move_dir += Point(0,-1)
@@ -148,24 +163,47 @@ class Player(Sprite):
         self.position += self.move_dir
         if w.is_key_down(KeyCode.N):
             w.create_sprite(Sword)
-        
+        if self.hp <= 0:
+            w.delete_all_sprites()
+            Scheduler.cancel_update(spwan_enemy)
+            w.create_label(Lose)
+        if self.kills >= 5:
+            w.delete_all_sprites()
+            Scheduler.cancel_update(spwan_enemy)
+            w.create_label(Win)
         
 
 
 class Sword(Sprite):
     def on_create(self):
-        self.rotation = -30
-        self.scale = 0.5
+        self.time = 0
+        
         self.position = player.position
-        self.x += player.width/2 + 10
+        # self.x += player.width/2 + 10
+        # self.y = player.y
         self.image = 'img/sword.png'
         self.add_tag('attack')
     def on_update(self, dt):
-        self.rotation -= 5
-        if self.rotation <= -120:
+        self.time += dt
+        # self.position = player.position
+        self.move_forward(10)        
+        if self.time >= 0.25:
             self.delete()
 
+class Win(Label):
+    def on_create(self):
+        self.x = w.width/2
+        self.y = w.height/2
+    def on_update(self, dt: float):
+        self.text = 'Win'
 
+
+class Lose(Label):
+    def on_create(self):
+        self.x = w.width/2
+        self.y = w.height/2
+    def on_update(self, dt: float):
+        self.text = 'Lose'
 enemy = w.create_sprite(Enemy)
 player = w.create_sprite(Player)
 
