@@ -1,3 +1,4 @@
+from cProfile import label
 from pycat.core import Window, Sprite, RotationMode, KeyCode, Point, Scheduler, Label
 from enum import Enum, auto
 from random import randint
@@ -9,14 +10,30 @@ Y_MIN = 100
 Y_MAX = 540
 SCALE_MIN = 45
 SCALE_MAX = 60
+STAGE_Y0 = 100
+STAGE_Y1 = w.height - 100
 S_D = SCALE_MAX - SCALE_MIN
+X1 = 100
+X2 = w.width-100
 D = 50
+
 ATK_DMG = 50
 def get_scale(y):
     a = (Y_MAX - y)/(Y_MAX - Y_MIN)
     return SCALE_MIN+a*S_D
 
-
+r = get_scale(STAGE_Y1)/get_scale(STAGE_Y0)
+L = X2-X1
+L2 = r*L
+x1 = w.center.x - (L2/2)
+x2 = w.center.x + (L2/2)
+w.create_line(X1, STAGE_Y0, X2, STAGE_Y0)
+w.create_line(x1, STAGE_Y1, x2, STAGE_Y1)
+w.create_line(X1, STAGE_Y0, x1, STAGE_Y1)
+w.create_line(X2, STAGE_Y0, x2, STAGE_Y1)
+w.create_line(X1, 20, X2, 20)
+w.create_line(X1, STAGE_Y0, X1, 20)
+w.create_line(X2, STAGE_Y0, X2, 20)
 def spwan_enemy(dt):
     w.create_sprite(Enemy)
 
@@ -144,13 +161,12 @@ class Player(Sprite):
         self.healthbar.position = self.position
         self.healthbar.y += self.height/2+5
         self.scale = get_scale(self.y)
-        self.point_toward_sprite(enemy)
         self.move_dir = Point(0,0)
         if w.is_key_pressed(KeyCode.A):
-            
+            self.rotation = 180
             self.move_dir += Point(-1,0)
         if w.is_key_pressed(KeyCode.D):
-            
+            self.rotation = 0
             self.move_dir += Point(1,0)
         if w.is_key_pressed(KeyCode.S):
             self.move_dir += Point(0,-1)
@@ -169,6 +185,7 @@ class Player(Sprite):
             w.create_label(Lose)
         if self.kills >= 5:
             w.delete_all_sprites()
+            
             Scheduler.cancel_update(spwan_enemy)
             w.create_label(Win)
 
@@ -177,16 +194,17 @@ class Player(Sprite):
 class Sword(Sprite):
     def on_create(self):
         self.time = 0
-        
         self.position = player.position
         # self.x += player.width/2 + 10
         # self.y = player.y
         self.image = 'img/sword.png'
         self.add_tag('attack')
+        self.rotation = player.rotation
+        print(self.rotation)
     def on_update(self, dt):
         self.time += dt
         # self.position = player.position
-        self.move_forward(10)        
+        self.move_forward(10)
         if self.time >= 0.25:
             self.delete()
 
@@ -194,6 +212,7 @@ class Win(Label):
     def on_create(self):
         self.x = w.width/2
         self.y = w.height/2
+        self.font_size = 50
     def on_update(self, dt: float):
         self.text = 'Win'
 
@@ -202,6 +221,7 @@ class Lose(Label):
     def on_create(self):
         self.x = w.width/2
         self.y = w.height/2
+        self.font_size = 50
     def on_update(self, dt: float):
         self.text = 'Lose'
 enemy = w.create_sprite(Enemy)
