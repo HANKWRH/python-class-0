@@ -82,6 +82,7 @@ class Enemy(Sprite):
 
 
     def on_update(self, dt):
+        self.layer = -self.y
         if self.is_attacking:
             self.attacktime += dt
             if self.attacktime >= 2:
@@ -158,6 +159,7 @@ class Player(Sprite):
         self.healthbar = w.create_sprite(Healthbar)
         self.hp = 100
     def on_update(self, dt):
+        self.layer = -self.y
         self.healthbar.position = self.position
         self.healthbar.y += self.height/2+5
         self.scale = get_scale(self.y)
