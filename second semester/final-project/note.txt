@@ -1,0 +1,38 @@
+Intro:(30s~1min)
+	Hi i am hank this is my second semester in studying python
+today i am going to introduce a game i make in this semester.
+I make a 2.5D game like one of my favorite game name 'bleak sword'.
+
+
+Demo:(1~2min)
+move:
+	i press 'w', 'a', 's', 'd'to move and 'space' to speed up
+attack:
+	i press 'n' to attack
+win:
+	How do i win?
+	when i killed 5 enemey i will win the game
+Lose:
+	When i am touched by enemey i will lose health
+	when my health become zero i will lose
+
+About my game:
+	i use 2.5D to make this game.
+	What is 2.5D?
+	2.5D is almost like 3D but all the object is still 2D
+	and i change the scale of the object to let them look
+	like they are moving back and foward
+
+Discussion:
+	Layer part:
+
+	
+	more thing i can do  ->  let them stay on the stage
+
+Q & A:
+
+	challenging part  ->  scale funtion
+	
+
+	what would i change if i code again?
+	use mouse to control direction
